@@ -531,6 +531,22 @@ export class Client {
         throw lastError
     }
 
+
+    async raw(command: string): Promise<string> {
+        await this.prepareTransfer(this.ftp);
+        const buffer = new StringWriter()
+        await downloadTo(buffer, {
+            ftp: this.ftp,
+            tracker: this._progressTracker,
+            command,
+            remotePath: "",
+            type: "list"
+        })
+        const text = buffer.getText(this.ftp.encoding)
+        console.log(text);
+        return text
+    }
+
     /**
      * @protected
      */
@@ -545,6 +561,7 @@ export class Client {
         })
         const text = buffer.getText(this.ftp.encoding)
         this.ftp.log(text)
+        console.log(text);
         return this.parseList(text)
     }
 
