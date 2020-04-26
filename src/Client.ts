@@ -543,7 +543,6 @@ export class Client {
             type: "list"
         })
         const text = buffer.getText(this.ftp.encoding)
-        console.log(text);
         return text
     }
 
@@ -561,7 +560,6 @@ export class Client {
         })
         const text = buffer.getText(this.ftp.encoding)
         this.ftp.log(text)
-        console.log(text);
         return this.parseList(text)
     }
 
